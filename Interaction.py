@@ -10,4 +10,4 @@ class Interaction:
     
     def run():
         print("Running Interaction")
-        self.Stock = Stock(self.Ticker,self.Interval,self.StartSlice,self.EndSlice,self.forSMVI)
+        self.stock = Stock(self.Ticker,self.Interval,self.StartSlice,self.EndSlice,self.forSMVI)
