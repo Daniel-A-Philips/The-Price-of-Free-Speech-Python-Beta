@@ -1,8 +1,24 @@
 import os
+from datetime import date
+from calendar import monthrange
 import PySimpleGUI as sg
 
+def getDates():
+    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    days = []
+    toReturn = []
+    today_date = date.today()
+    year = today_date.year
+    for i in range(1,13):
+        toReturn.append(date(year-1,i,1))
+        days.append(monthrange(year-1, i)[1])
+    for f in range(1,13):
+        toReturn.append(date(year,f,1))
+        days.append(monthrange(year, f)[1])
+    return toReturn
+
 Intervals = [1, 5, 15, 30, 60, 'Day', 'Week', 'Month']
-Months = ['tbd','tbd']
+Months = getDates()
 layout = [
          [sg.Text('Stock Ticker',size=(15,1)),sg.Input("Ticker",key='Ticker',size=(10,1))],
          [sg.Text('Twitter Handle',size=(15,1)),sg.Input("Handle",key='Handle',size=(10,1))],
@@ -24,4 +40,5 @@ while True:
     else:
         window['-SD-'].update("SD test")
         window['-SMVI-'].update("SMVI test")
+        getDates()
 
