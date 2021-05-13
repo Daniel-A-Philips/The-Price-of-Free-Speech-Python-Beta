@@ -1,8 +1,70 @@
+from FinnHub import FinnHub
+import math
 class Stock:
-
     def __init__(self,Ticker,Interval,StartSlice,EndSlice,forSMVI):
         self.Ticker = Ticker
         self.Interval = Interval
         self.StartSlice = StartSlice
         self.EndSlice = EndSlice
-        self.forSVMI = forSMVI
+        self.forSMVI = forSMVI
+        self.run()
+
+    def toDate(self,foo,noTime):
+        if noTime: return datetime.datetime.fromtimestamp(foo).strftime('%Y-%m-%d')
+        return datetime.datetime.fromtimestamp(foo).strftime('%Y-%m-%d %H:%M:%S')
+
+    #Fee fi fo fum, parseToArray to get things done
+    def parseToArray(self,fee):
+    	fi = []
+    	for fo in fee:
+    		fi.append(fo.split(','))
+    	return fi
+
+    def getAverage(self,foo):
+        Open = float(foo[1])
+        Close = float(foo[4])
+        High = float(foo[2])
+        Low = float(foo[3])
+        return (Open + Close + High + Low)/4
+
+    def addArrays(self):
+        self.headers = self.finnHub.headers
+        self.Times = self.Open = self.High = self.Low = self.Close = self.Volume = []
+        for line in self.parseToArray(self.finnHub.allData):
+            self.Times.append(float(line[0]))
+            self.Open.append(float(line[1]))
+            self.High.append(float(line[2]))
+            self.Low.append(float(line[3]))
+            self.Close.append(float(line[4]))
+            self.Volume.append(float(line[4]))
+        self.allData = {
+                        'Times'  :   self.Times,
+                        'Open'   :   self.Open,
+                        'High'   :   self.High,
+                        'Low'    :   self.Low,
+                        'Close'  :   self.Close,
+                        'Volume' :   self.Volume
+                        }
+
+    # data : a 2D array where each entry is an array, which follows the following format
+    # [Times,Open,High,Low,Close,Volume]
+    def standardDeviation(self,data):
+        N = len(data)
+        tempMu = 0
+        Points = []
+        for time in data: 
+            tempMu += self.getAverage(time)
+            Points.append(self.getAverage(time))
+        Mu = tempMu/N
+        top = 0
+        for xi in Points:
+            top += (xi - Mu)**2
+        sigma = math.sqrt( top / N )
+        print('SD:',sigma)
+        return sigma
+        
+    def run(self):
+        self.finnHub = FinnHub(self.StartSlice,self.EndSlice,self.Ticker,self.Interval,self.forSMVI)
+        self.addArrays()
+        self.SDToDisplay = self.standardDeviation(self.finnHub.allData)
+
