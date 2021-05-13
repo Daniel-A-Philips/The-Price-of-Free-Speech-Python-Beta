@@ -53,7 +53,6 @@ class FinnHub:
                 years.append(startend[len(startend)-4:])
                 months.append(startend[:len(startend)-5:])
         unixed = self.toUnix(months,years)
-        print(unixed)
         return unixed
 
 

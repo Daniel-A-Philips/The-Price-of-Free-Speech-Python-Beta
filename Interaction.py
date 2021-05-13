@@ -1,10 +1,11 @@
 class Interaction:
 
-    def __init__(self,Ticker,Interval,StartSlice,EndSlice,Handle,forSMVI):
+    def __init__(self,Ticker,Interval,StartSlice,EndSlice,AllSlices,Handle,forSMVI):
         self.Ticker = Ticker
         self.Interval = Interval
         self.StartSlice  = StartSlice
         self.EndSlice = EndSlice
+        self.AllSlices = AllSlices
         self.Hanlde = Handle
         self.forSMVI = forSMVI
     

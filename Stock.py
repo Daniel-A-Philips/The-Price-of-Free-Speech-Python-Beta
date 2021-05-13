@@ -1,13 +1,31 @@
 from FinnHub import FinnHub
+import PySimpleGUI as sg
 import math
 class Stock:
-    def __init__(self,Ticker,Interval,StartSlice,EndSlice,forSMVI):
+    def __init__(self,Ticker,Interval,StartSlice,EndSlice,AllSlices,forSMVI):
         self.Ticker = Ticker
         self.Interval = Interval
         self.StartSlice = StartSlice
         self.EndSlice = EndSlice
+        self.AllSlices = AllSlices
         self.forSMVI = forSMVI
+        self.AllIntervals = [1, 5, 15, 30, 60, 'Day', 'Week', 'Month']
+        self.errorHandling()
         self.run()
+
+    def popup(self,text):
+        sg.Popup(text)
+        exit()
+
+    def errorHandling(self):
+        if self.Ticker == 'Ticker':
+            self.popup('Error, the asset ticker that has been given has an error')
+        elif not self.Interval in self.AllIntervals:
+            self.popup('Error, the interval that has been given is incorrect')
+        elif not self.StartSlice in self.AllSlices:
+            self.popup('Error, the starting time that has been given is incorrect')
+        elif not self.EndSlice in self.AllSlices:
+            self.popup('Error, the ending time that has been given is incorrect')
 
     def toDate(self,foo,noTime):
         if noTime: return datetime.datetime.fromtimestamp(foo).strftime('%Y-%m-%d')
@@ -50,6 +68,8 @@ class Stock:
     # [Times,Open,High,Low,Close,Volume]
     def standardDeviation(self,data):
         N = len(data)
+        if N == 0:
+            self.popup('Unknown Error, please contact daniel_philips@asl.org')
         tempMu = 0
         Points = []
         for time in data: 

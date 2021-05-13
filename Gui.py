@@ -54,7 +54,7 @@ class Gui:
                  [sg.Text('End Month',size=(15,1)),sg.Combo(self.Months,default_value = self.Months[len(self.Months)-1],key='EndMonth')],
                  [sg.Text('SD:',size=(5,1)),sg.Text(size=(10,1),key='SD')],
                  [sg.Text('SMVI:',size=(5,1)),sg.Text(size=(10,1),key='SMVI')],
-                 [sg.Button('Run'),sg.Text('Please enter in your information',size=(25,1),key='Terminal')],
+                 [sg.Button('Run'),sg.Text('Please enter in your information',size=(28,1),key='Terminal')],
                  [sg.Button("Exit")]
                  ]
         sg.theme('Reddit')
