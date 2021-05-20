@@ -1,7 +1,11 @@
 import os
 from datetime import date
 from calendar import monthrange
+import difflib
 import PySimpleGUI as sg
+from getAllTickers import getAllTickers
+from AutoComplete import predictor
+import csv
 class Gui:
 
     def __init__(self):
@@ -11,6 +15,13 @@ class Gui:
         toReturn = foo.strftime('%B'),foo.strftime('%Y')
         toReturn = ' '.join(toReturn)
         return toReturn
+
+    def getTickers(self):
+        self.allTickers = []
+        with open(os.getcwd() + '/Data/tickers.csv') as file:
+            reader = csv.reader(file)
+            for line in reader:
+                if not line[0] == 'Symbol': self.allTickers.append(line[0])
 
     def getDates(self):
         months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -38,16 +49,23 @@ class Gui:
     def update(self,key,text):
         self.window[key].update(text)
 
+    def updateTickers(self):
+        event,values = self.data()
+        closest = self.complete.getClosest(values['Ticker'])
+        self.window.FindElement('Ticker').Update(values=closest,value=values['Ticker'])
+
     def data(self):
-        return self.window.read()
+        return self.window.read(timeout=30)
 
     def run(self):
+        self.complete = predictor()
+        self.getTickers()
         self.Intervals = [1, 5, 15, 30, 60, 'Day', 'Week', 'Month']
         self.Months = []
         for month in self.getDates():
             self.Months.append(self.format(month))
         self.layout = [
-                 [sg.Text('Stock Ticker',size=(15,1)),sg.Input("Ticker",key='Ticker',size=(10,1))],
+                 [sg.Text('Stock Ticker',size=(15,1)),sg.InputCombo(values=self.allTickers,key='Ticker',default_value='',size=(10,1))],
                  [sg.Text('Twitter Handle',size=(15,1)),sg.Input("Handle",key='Handle',size=(10,1))],
                  [sg.Text('Data Interval',size=(15,1)),sg.Combo(self.Intervals,default_value = self.Intervals[3],key='Interval')],
                  [sg.Text('Start Month',size=(15,1)),sg.Combo(self.Months,default_value = self.Months[0],key='StartMonth')],

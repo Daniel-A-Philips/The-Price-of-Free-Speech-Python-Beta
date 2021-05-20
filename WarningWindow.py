@@ -19,5 +19,3 @@ class WarningWindow:
 				if values['check']:
 					window.close()
 					break
-
-

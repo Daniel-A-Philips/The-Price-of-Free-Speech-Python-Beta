@@ -1,23 +1,36 @@
 from FinnHub import FinnHub
+from getAllTickers import getAllTickers
 import PySimpleGUI as sg
 import math
+import csv
+import os
 class Stock:
     def __init__(self,Ticker,Interval,StartSlice,EndSlice,AllSlices,forSMVI):
-        self.Ticker = Ticker
+        self.Ticker = Ticker.upper()
         self.Interval = Interval
         self.StartSlice = StartSlice
         self.EndSlice = EndSlice
         self.AllSlices = AllSlices
         self.forSMVI = forSMVI
         self.AllIntervals = [1, 5, 15, 30, 60, 'Day', 'Week', 'Month']
+        self.getTickers()
         self.errorHandling()
-        self.run()
+        if not self.hasErrors: self.run()
+
+    def getTickers(self):
+        self.allTickers = []
+        with open(os.getcwd() + '/Data/tickers.csv') as file:
+            reader = csv.reader(file)
+            for line in reader:
+                if not line[0] == 'Symbol': self.allTickers.append(line[0])
+
 
     def popup(self,text):
         sg.Popup(text)
-        exit()
+        self.hasErrors = True
 
     def errorHandling(self):
+        self.hasErrors = False
         if self.Ticker == 'Ticker':
             self.popup('Error, the asset ticker that has been given has an error')
         elif not self.Interval in self.AllIntervals:
@@ -26,6 +39,12 @@ class Stock:
             self.popup('Error, the starting time that has been given is incorrect')
         elif not self.EndSlice in self.AllSlices:
             self.popup('Error, the ending time that has been given is incorrect')
+        elif self.AllSlices.index(self.EndSlice) < self.AllSlices.index(self.StartSlice):
+            self.popup('Error, the ending time is before the starting time')
+        elif not self.forSMVI and not self.Ticker in self.allTickers:
+            self.getTickers()
+            if not self.Ticker in self.allTickers:
+                self.popup('Error, the given ticker is invalid')
 
     def toDate(self,foo,noTime):
         if noTime: return datetime.datetime.fromtimestamp(foo).strftime('%Y-%m-%d')
@@ -87,4 +106,3 @@ class Stock:
         self.finnHub = FinnHub(self.StartSlice,self.EndSlice,self.Ticker,self.Interval,self.forSMVI)
         self.addArrays()
         self.SDToDisplay = self.standardDeviation(self.finnHub.allData)
-
