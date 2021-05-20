@@ -52,7 +52,7 @@ class Gui:
     def updateTickers(self):
         event,values = self.data()
         closest = self.complete.getClosest(values['Ticker'])
-        self.window.FindElement('Ticker').Update(values=closest,value=values['Ticker'],size=(10,1))
+        self.window.FindElement('Ticker').Update(values=closest,value=values['Ticker'],size=(10,10))
 
     def data(self):
         return self.window.read(timeout=30)
