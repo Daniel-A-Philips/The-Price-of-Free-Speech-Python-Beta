@@ -1,5 +1,4 @@
 import requests
-import re
 import os
 class getAllTickers():
 	def __init__(self):

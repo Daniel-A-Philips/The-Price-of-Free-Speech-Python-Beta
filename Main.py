@@ -1,17 +1,12 @@
 import os
-from datetime import date
-from calendar import monthrange
 import PySimpleGUI as sg
 from Stock import Stock
 from Gui import Gui
-import csv
 from WarningWindow import WarningWindow
-from AutoComplete import predictor
 
 
 warning = WarningWindow()
 gui = Gui()
-complete = predictor()
 prevTicker = ''
 while True:
     event,values = gui.data()
