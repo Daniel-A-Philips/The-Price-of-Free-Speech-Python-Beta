@@ -1,7 +1,8 @@
-from fast_autocomplete import AutoComplete as AC
-import difflib
 import os
 import csv
+import difflib
+from fast_autocomplete import AutoComplete as AC
+
 class predictor:
 
 	def getTickers(self):
@@ -12,6 +13,8 @@ class predictor:
 				if not line[0] == 'Symbol': self.allTickers.append(line[0])
 
 	def getClosest(self,current):
+		if current == 'Ticker':
+			return ['']
 		number_to_show = 15 - (2 * len(current))
 		if number_to_show <= 0:
 			number_to_show = 1

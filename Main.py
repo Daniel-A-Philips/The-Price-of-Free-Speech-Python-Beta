@@ -1,7 +1,7 @@
 import os
-import PySimpleGUI as sg
-from Stock import Stock
 from Gui import Gui
+from Stock import Stock
+import PySimpleGUI as sg
 from WarningWindow import WarningWindow
 
 
@@ -37,3 +37,4 @@ while True:
             gui.update('Terminal','Calculating baseline...')
             DIA = Stock('DIA',toEnter[1],toEnter[2],toEnter[3],allSlices,True)
             gui.update('Terminal','Calculating SVMI')
+        

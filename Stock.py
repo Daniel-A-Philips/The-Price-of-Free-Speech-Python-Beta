@@ -1,9 +1,10 @@
-from FinnHub import FinnHub
 from getAllTickers import getAllTickers
+from FinnHub import FinnHub
 import PySimpleGUI as sg
 import math
 import csv
 import os
+
 class Stock:
     def __init__(self,Ticker,Interval,StartSlice,EndSlice,AllSlices,forSMVI):
         self.Ticker = Ticker.upper()
@@ -23,7 +24,6 @@ class Stock:
             reader = csv.reader(file)
             for line in reader:
                 if not line[0] == 'Symbol': self.allTickers.append(line[0])
-
 
     def popup(self,text):
         sg.Popup(text)

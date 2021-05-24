@@ -53,24 +53,32 @@ class FinnHub:
                 years.append(startend[len(startend)-4:])
                 months.append(startend[:len(startend)-5:])
         unixed = self.toUnix(months,years)
+        print('unixed: ', unixed)
         return unixed
 
 
     def URLConnect(self):
+        monthInSeconds = 2629746
         start = self.Dates[0]
-        end = self.Dates[1]
-        start = str(start)
-        end = str(end)
-        self.Interval = str(self.Interval)
-        print('Connecting to URL')
-        r = requests.get(
-            'https://finnhub.io/api/v1/stock/candle?symbol=' + self.Ticker + '&resolution=' + self.Interval + '&from=' + start + '&to=' + end + '&format=' + self.Format + '&token=' + self.key)
-        data = str(r.content).split("\\n")
-        self.headers = ['time','open','high','low','close','volume']
-        print(self.headers)
-        data.pop(0)
-        data.remove("'")
-        self.rawData.append(data)
+        final = self.Dates[1]
+        prevStart = start
+        end = start + monthInSeconds
+        index = 0
+        while end < final:
+            prevStart = prevStart + monthInSeconds
+            end = end + monthInSeconds
+            startime = str(prevStart)
+            endtime = str(end)
+            self.Interval = str(self.Interval)
+            print('Connecting to URL')
+            print(startime,',',endtime)
+            r = requests.get(
+                'https://finnhub.io/api/v1/stock/candle?symbol=' + self.Ticker + '&resolution=' + self.Interval + '&from=' + startime + '&to=' + endtime + '&format=' + self.Format + '&token=' + self.key)
+            data = str(r.content).split("\\n")
+            self.headers = ['time','open','high','low','close','volume']
+            data.pop(0)
+            data.remove("'")
+            self.rawData.append(data)
 
     def writeData(self):
         if self.forSMVI: path = self.absPath + '/Data/DIA_Data.csv'
