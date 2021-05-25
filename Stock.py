@@ -1,6 +1,7 @@
 from getAllTickers import getAllTickers
 from FinnHub import FinnHub
 import PySimpleGUI as sg
+import datetime
 import math
 import csv
 import os
@@ -82,6 +83,7 @@ class Stock:
                         'Close'  :   self.Close,
                         'Volume' :   self.Volume
                         }
+        print('Self.Times:',self.Times)
 
     # data : a 2D array where each entry is an array, which follows the following format
     # [Times,Open,High,Low,Close,Volume]

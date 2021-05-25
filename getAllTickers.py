@@ -8,4 +8,3 @@ class getAllTickers():
 		r = requests.get(url,allow_redirects=True)
 		print(r.headers.get('content-type'))
 		open(path + 'tickers.csv','wb+').write(r.content)
-

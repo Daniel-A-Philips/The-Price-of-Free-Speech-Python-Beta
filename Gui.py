@@ -4,7 +4,7 @@ import PySimpleGUI as sg
 from datetime import date
 from calendar import monthrange
 from AutoComplete import predictor
-from getAllTickers import getAllTickers
+
 class Gui:
 
     def __init__(self):
@@ -65,7 +65,7 @@ class Gui:
             self.Months.append(self.format(month))
         self.layout = [
                  [sg.Text('Stock Ticker',size=(15,1)),sg.InputCombo(values=self.allTickers,key='Ticker',default_value='Ticker',size=(10,1))],
-                 [sg.Text('Twitter Handle',size=(15,1)),sg.Input("Handle",key='Handle',size=(10,1))],
+                 [sg.Text('Twitter Handles (Separated by a comma)',size=(15,3)),sg.Input("Handle",key='Handle',size=(10,1))],
                  [sg.Text('Data Interval',size=(15,1)),sg.Combo(self.Intervals,default_value = self.Intervals[3],key='Interval')],
                  [sg.Text('Start Month',size=(15,1)),sg.Combo(self.Months,default_value = self.Months[0],key='StartMonth')],
                  [sg.Text('End Month',size=(15,1)),sg.Combo(self.Months,default_value = self.Months[len(self.Months)-1],key='EndMonth')],
