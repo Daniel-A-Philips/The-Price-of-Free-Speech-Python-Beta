@@ -59,7 +59,7 @@ class Gui:
     def run(self):
         self.complete = predictor()
         self.getTickers()
-        self.Intervals = [1, 5, 15, 30, 60, 'Day', 'Week', 'Month']
+        self.Intervals = ['1 Minute', '5 Minutes', '15 Minutes', '30 Minutes', '60 Minutes', '1 Day', '1 Week', '1 Month']
         self.Months = []
         for month in self.getDates():
             self.Months.append(self.format(month))

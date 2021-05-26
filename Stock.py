@@ -7,14 +7,15 @@ import csv
 import os
 
 class Stock:
-    def __init__(self,Ticker,Interval,StartSlice,EndSlice,AllSlices,forSMVI):
+    def __init__(self,Ticker,Interval_Index,StartSlice,EndSlice,AllSlices,forSMVI):
         self.Ticker = Ticker.upper()
-        self.Interval = Interval
+        self.AllIntervals = [1, 5, 15, 30, 60, 'D', 'W', 'M']
+        self.Interval = self.AllIntervals[Interval_Index]
+        print(self.Interval)
         self.StartSlice = StartSlice
         self.EndSlice = EndSlice
         self.AllSlices = AllSlices
         self.forSMVI = forSMVI
-        self.AllIntervals = [1, 5, 15, 30, 60, 'Day', 'Week', 'Month']
         self.getTickers()
         self.errorHandling()
         if not self.hasErrors: self.run()

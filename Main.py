@@ -24,6 +24,7 @@ class GuiRunner:
 
     def main(self):
         self.gui = Gui()
+        self.Intervals = ['1 Minute', '5 Minutes', '15 Minutes', '30 Minutes', '60 Minutes', '1 Day', '1 Week', '1 Month']
         prevTicker = ''
         while True:
             event,values = self.gui.data()
@@ -34,7 +35,7 @@ class GuiRunner:
             if event == sg.WIN_CLOSED or event == 'Exit': exit()
             elif event == 'Run':
                 toEnter = [ values['Ticker'],
-                            values['Interval'],
+                            self.Intervals.index(values['Interval']),
                             values['StartMonth'],
                             values['EndMonth'],
                           ]

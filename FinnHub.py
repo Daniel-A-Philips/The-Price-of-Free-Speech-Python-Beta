@@ -72,11 +72,13 @@ class FinnHub:
             self.Interval = str(self.Interval)
             print('Connecting to URL')
             print(startime,',',endtime)
+            print('Self.Interval:',self.Interval)
             r = requests.get(
                 'https://finnhub.io/api/v1/stock/candle?symbol=' + self.Ticker + '&resolution=' + self.Interval + '&from=' + startime + '&to=' + endtime + '&format=' + self.Format + '&token=' + self.key)
             data = str(r.content).split("\\n")
             self.headers = ['time','open','high','low','close','volume']
             data.pop(0)
+            print('Data: ',data)
             data.remove("'")
             self.rawData.append(data)
 
