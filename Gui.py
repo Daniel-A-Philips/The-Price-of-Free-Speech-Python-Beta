@@ -20,7 +20,16 @@ class Gui:
         with open(os.getcwd() + '/Data/tickers.csv') as file:
             reader = csv.reader(file)
             for line in reader:
-                if not line[0] == 'Symbol': self.allTickers.append(line[0])
+                if not line[0] == 'Symbol' or not line[0].split('|')[0] == 'Symbol':
+                    if '^' in line[0] or '^' in line[0].split('|')[0]:
+                        continue
+                    if not '|' in line[0]:
+                        self.allTickers.append(line[0])
+                    else:
+                        self.allTickers.append(line[0].split('|')[0])
+        self.allTickers = list(dict.fromkeys(self.allTickers))
+        self.allTickers.sort()
+
 
     def getDates(self):
         months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]

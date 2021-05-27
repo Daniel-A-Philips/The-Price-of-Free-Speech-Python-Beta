@@ -15,9 +15,7 @@ class predictor:
 	def getClosest(self,current):
 		if current == 'Ticker':
 			return ['']
-		number_to_show = 15 - (2 * len(current))
-		if number_to_show <= 0:
-			number_to_show = 1
+		number_to_show = 15
 		closest = difflib.get_close_matches(current.upper(),self.allTickers,n=number_to_show)
 		return closest
 

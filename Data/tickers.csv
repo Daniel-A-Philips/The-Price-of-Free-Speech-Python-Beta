@@ -5608,20 +5608,6 @@ PRTY,Party City Holdco Inc. Common Stock,$8.93,-0.07,-0.778%,993879495.00,United
 PRU,Prudential Financial Inc. Common Stock,$105.80,2.60,2.519%,41685200000.00,United States,2001,2263481,Finance,Life Insurance
 PRVA,Privia Health Group Inc. Common Stock,$29.18,-0.96,-3.185%,3084641640.00,United States,2021,518400,Technology,Retail: Computer Software & Peripheral Equipment
 PRVB,Provention Bio Inc. Common Stock,$6.75,-0.05,-0.735%,427779482.00,United States,2018,570377,Health Care,Major Pharmaceuticals
-PSA,Public Storage Common Stock,$273.95,4.24,1.572%,47935261453.00,United States,,612103,Consumer Services,Real Estate Investment Trusts
-PSA^C,Public Storage Depositary Shares Each Representing 1/1000 of a 5.125% Cumulative Preferred Share of Beneficial Interest Series C,$25.525,0.125,0.492%,,United States,,3430,,
-PSA^D,Public Storage Depositary Shares Each Representing 1/1000 of a 4.95% Cumulative Preferred Share of Beneficial Interest Series D,$25.40,0.12,0.475%,,United States,,10180,,
-PSA^E,Public Storage Depositary Shares Each Representing 1/1000 of a 4.90% Cumulative Preferred Share of Beneficial Interest Series E,$25.66,0.05,0.195%,,United States,,10451,,
-PSA^F,Public Storage Depositary Shares Each Representing 1/1000 of a 5.15% Cumulative Preferred Share of Beneficial Interest Series F par value $0.01 per share,$26.47,0.12,0.455%,,United States,,6803,,
-PSA^G,Public Storage Depositary Shares Each Representing 1/1000 of a 5.05% Cumulative Preferred Share of Beneficial Interest Series G,$26.275,0.055,0.21%,,United States,,4328,,
-PSA^H,Public Storage Depositary Shares Each Representing 1/1000 of a  5.60% Cumulative Preferred  Share of Beneficial Interest Series H,$27.76,0.11,0.398%,,United States,,6070,,
-PSA^I,Public Storage Depositary Shares Each Representing 1/1000 of a 4.875% Cumulative Preferred Share of Beneficial Interest Series I par value $0.01 per share,$27.08,-0.01,-0.037%,,United States,,7205,,
-PSA^J,Public Storage Depositary Shares Each Representing 1/1000 of a 4.700% Cumulative Preferred Share of Beneficial Interest Series J par value $0.01 per share,$27.05,0.01,0.037%,,United States,,15256,,
-PSA^K,Public Storage Depositary Shares Each Representing 1/1000 of a 4.75% Cumulative Preferred Share of Beneficial Interest Series K,$27.23,0.08,0.295%,,United States,,1675,,
-PSA^L,Public Storage Depositary Shares Each Representing 1/1000 of a 4.625% Cumulative Preferred Share of Beneficial Interest Series L par value $0.01 per share,$26.36,-0.06,-0.227%,,United States,,26250,,
-PSA^M,Public Storage Depositary Shares Each Representing 1/1000 of a 4.125% Cumulative Preferred Share of Beneficial Interest Series M,$25.6495,-0.0505,-0.196%,,United States,,93062,,
-PSA^N,Public Storage Depositary Shares Each Representing 1/1000 of a 3.875% Cumulative Preferred Share of Beneficial Interest Series N,$25.10,-0.01,-0.04%,,United States,,22936,,
-PSA^O,Public Storage Depositary Shares Each Representing 1/1000 of a 3.900% Cumulative Preferred Share of Beneficial Interest Series O,$25.24,-0.10,-0.395%,,United States,,21238,,
 PSAC,Property Solutions Acquisition Corp. Common Stock,$10.89,-0.04,-0.366%,321434805.00,United States,2020,460657,,
 PSACU,Property Solutions Acquisition Corp. Unit,$13.16,0.16,1.231%,0.00,United States,2020,100,,
 PSACW,Property Solutions Acquisition Corp. Warrant,$2.21,0.00,0.00%,0.00,United States,2020,69929,,
@@ -5629,10 +5615,6 @@ PSAG,Property Solutions Acquisition Corporation II Class A Common Stock,$9.70,-0
 PSAGU,Property Solutions Acquisition Corporation II Units,$10.00,0.03,0.301%,0.00,United States,2021,28911,,
 PSAGW,Property Solutions Acquisition Corporation II Warrant,$0.83,-0.07,-7.778%,0.00,United States,2021,28684,Finance,Business Services
 PSB,PS Business Parks Inc. Common Stock,$154.48,4.37,2.911%,4252681001.00,United States,,124910,Consumer Services,Real Estate Investment Trusts
-PSB^W,PS Business Parks Inc. Depositary Shares Each Representing 1/1000 of a Share of 5.20% Cumulative Preferred Stock Series W,$25.7135,0.1835,0.719%,,United States,,6150,,
-PSB^X,PS Business Parks Inc. Depositary Shares Each Representing 1/1000 of a Share of 5.25% Cumulative Preferred Stock Series X,$26.68,0.02,0.075%,,United States,,16106,,
-PSB^Y,PS Business Parks Inc. 5.20% Cumulative Preferred Stock Series Y,$26.47,0.14,0.532%,,United States,,11249,,
-PSB^Z,PS Business Parks Inc. Depositary Shares Each Representing 1/1000 of a Share of 4.875% Cumulative Preferred Stock Series Z  par value $0.01 per share,$26.86,0.10,0.374%,,United States,,16374,,
 PSCW,Pacer Swan SOS Conservative (April) ETF,$20.93,0.14,0.673%,,United States,2021,2,,
 PSCX,Pacer Swan SOS Conservative (December) ETF,$21.5309,0.1379,0.645%,,United States,2020,1,,
 PSEC,Prospect Capital Corporation Common Stock,$7.83,0.21,2.756%,3036145727.00,United States,2004,3207734,Finance,Finance/Investors Services
@@ -7658,7 +7640,6 @@ ZY,Zymergen Inc. Common Stock,$28.50,-4.63,-13.975%,2791315679.00,United States,
 ZYME,Zymeworks Inc. Common Shares,$26.62,-0.96,-3.481%,1229046305.00,Canada,2017,349318,,
 ZYNE,Zynerba Pharmaceuticals Inc. Common Stock,$4.29,0.05,1.179%,176969094.00,United States,2015,1628567,Health Care,Major Pharmaceuticals
 ZYXI,Zynex Inc. Common Stock,$13.48,-0.48,-3.438%,469732923.00,United States,,413270,Health Care,Biotechnology: Electromedical & Electrotherapeutic Apparatus
-=======
 Symbol|Security Name|Market Category|Test Issue|Financial Status|Round Lot Size|ETF|NextShares
 AACG|ATA Creativity Global - American Depositary Shares, each representing two common shares|G|N|N|100|N|N
 AACQ|Artius Acquisition Inc. - Class A Common Stock|S|N|N|100|N|N
@@ -12365,5 +12346,3 @@ ZXZZT|NASDAQ TEST STOCK|G|Y|N|100||N
 ZY|Zymergen Inc. - Common Stock|Q|N|N|100|N|N
 ZYNE|Zynerba Pharmaceuticals, Inc. - Common Stock|G|N|N|100|N|N
 ZYXI|Zynex, Inc. - Common Stock|S|N|N|100|N|N
-File Creation Time: 0524202110:01|||||||
->>>>>>> Stashed changes

@@ -32,6 +32,8 @@ class GuiRunner:
             if not values['Ticker'] == prevTicker:
                 self.gui.updateTickers()
                 prevTicker = values['Ticker']
+            elif values['Ticker'] == 'Ticker' or values['Ticker'] == '':
+                self.gui.window.FindElement('Ticker').Update(values=self.gui.allTickers,value=values['Ticker'],size=(10,10))
             if event == sg.WIN_CLOSED or event == 'Exit': exit()
             elif event == 'Run':
                 toEnter = [ values['Ticker'],
@@ -42,25 +44,21 @@ class GuiRunner:
                 self.gui.update('SD',"Calculating...")
                 self.gui.update('SMVI',"Calculating...")
                 self.gui.update('Terminal','Calculating...')
-                allSlices = self.gui.Months
                 if values['Handle'] == '' or values['Handle'] == 'Handle':
                     sg.popup('Error, please enter a valid Twitter handle')
                     continue
-                print(type(toEnter[1]))
-                stock = Stock(toEnter[0],toEnter[1],toEnter[2],toEnter[3],allSlices,False)
+                stock = Stock(toEnter[0],toEnter[1],toEnter[2],toEnter[3],self.gui.Months,False)
                 if stock.hasErrors:
                     self.gui.update('Terminal','An error occured')
+                    continue
                 else:
                     SDToDisplay = str(stock.SDToDisplay)[0:8]
                     self.gui.update('SD',SDToDisplay)
-                    print('Calculating baseline...')
                     self.gui.update('Terminal','Calculating baseline...')
-                    DIA = Stock('DIA',toEnter[1],toEnter[2],toEnter[3],allSlices,True)
+                    DIA = Stock('DIA',toEnter[1],toEnter[2],toEnter[3],self.gui.Months,True)
                     self.gui.update('Terminal','Calculating SVMI')
-                    time.sleep(1)
                     cor = Correlation(stock,DIA,self.parseHandles(values['Handle']))
-                    SMVI = str(cor.SMVI * float(SDToDisplay))[0:8]
-                    self.gui.update('SMVI',SMVI)
+                    self.gui.update('SMVI',str(cor.SMVI * float(SDToDisplay))[0:8])
                     self.gui.update('Terminal','Done!')
 
 runner = GuiRunner()
