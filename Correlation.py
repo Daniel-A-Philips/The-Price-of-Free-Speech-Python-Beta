@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn import linear_model
-from sklearn import svm
+from sklearn import linear_model, svm
 from Twitter import TweepyModule
 import datetime
 
@@ -12,11 +11,10 @@ class Correlation:
         self.base = base
         self.handles = handles
         self.create_comparison()
-        print('Created Correlation.py class')
 
     def get_tweets(self):
         Tweep = TweepyModule(self.handles,self.start,self.end)
-        self.tweet_times = {} # {handle: [tweets in list]
+        self.tweet_times = {} # {handle: [tweets in list]}
         for handle in self.handles:
             handle_tweet_times = []
             for tweet in Tweep.all_tweets[handle]:
@@ -26,15 +24,13 @@ class Correlation:
         for handle in self.handles:
             self.join_tweet_times.extend(self.tweet_times[handle])
         self.join_tweet_times.sort(reverse=True)
-       # print('join_tweet_times',self.join_tweet_times)
         self.get_closest_tweet_times()
         self.count_times(self.closest_tweet_times)
 
     def get_closest_tweet_times(self):
         shared_data = self.joint_data_frame.index.values.tolist()
         self.closest_tweet_times = []
-        for time in self.join_tweet_times:
-            self.closest_tweet_times.append(min(shared_data, key=lambda x:abs(x-time)))
+        for time in self.join_tweet_times: self.closest_tweet_times.append(min(shared_data, key=lambda x:abs(x-time)))
 
     def count_times(self,data):
         self.num_tweets_time_linked = []
@@ -80,7 +76,6 @@ class Correlation:
 
     def create_individual_data_frame(self,stock_data,base_data):
         headers = ['Time','Stock Open','Stock High','Stock Low','Stock Close','Stock Volume']
-        print(headers)
         stock_data = self.remove_values_from_list(stock_data, [])
         base_data = self.remove_values_from_list(base_data,[])
         del stock_data[0]
@@ -91,8 +86,6 @@ class Correlation:
         for line in base_data: base_cols.append(line[0])
         self.start = stock_cols[0]
         self.end = stock_cols[-1]
-        print('stock_data:',stock_data)
-        print('base_data:',base_data)
         self.stock_data_frame = pd.DataFrame(data=stock_data,columns=headers,index=stock_cols)
         self.base_data_frame = pd.DataFrame(data=base_data,columns=headers,index=base_cols)
         self.get_tweets()
@@ -118,7 +111,8 @@ class Correlation:
     def run_model(self):
         self.models_evaluation()
 
-    #https://stackoverflow.com/questions/41925157/logisticregression-unknown-label-type-continuous-using-sklearn-in-python
+    # Reference for SKLearn:
+    # https://stackoverflow.com/questions/41925157/logisticregression-unknown-label-type-continuous-using-sklearn-in-python
     def models_evaluation(self):
         classifiers = [ #Allows for easy selection for SMVI testing
             svm.SVR(),
@@ -156,7 +150,6 @@ class Correlation:
         headers = self.joint_data_frame.columns.values.tolist()
         headers.insert(0,'# of Tweets')
         headers.insert(0,'Time')
-        #self.joint_data_frame
         self.data_frame_as_list = [headers]
         times = self.joint_data_frame.index.values.tolist()
         for i in range(0,len(times)):
@@ -173,8 +166,6 @@ class Correlation:
         self.shared_data = self.get_shared_timings(all_stock_data, all_base_data)
         self.create_joint_data_frame(self.shared_data)
         self.create_individual_data_frame(all_stock_data,all_stock_data)
-        print('Running create_joint_data_frame for second time')
         self.add_twitter_data()
         self.create_joint_data_frame(self.data_frame_as_list) #Rerun to use new self.shared_data
         self.run_model()
-        print(sd_of_stock,',',sd_of_base)

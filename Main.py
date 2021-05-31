@@ -2,10 +2,12 @@ from Gui import Gui
 from Stock import Stock
 import PySimpleGUI as sg
 from Correlation import Correlation
+from WarningWindow import WarningWindow
 
 class GuiRunner:
 
     def __init__(self):
+        self.WarningWindow = WarningWindow()
         self.main()
 
     def parseHandles(self,handles):

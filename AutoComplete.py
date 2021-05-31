@@ -1,7 +1,6 @@
 import os
 import csv
 import difflib
-from fast_autocomplete import AutoComplete as AC
 
 class predictor:
 

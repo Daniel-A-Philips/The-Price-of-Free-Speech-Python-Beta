@@ -1,4 +1,3 @@
-from getAllTickers import getAllTickers
 from FinnHub import FinnHub
 import PySimpleGUI as sg
 import datetime
@@ -11,7 +10,6 @@ class Stock:
         self.Ticker = Ticker.upper()
         self.AllIntervals = [1, 5, 15, 30, 60, 'D', 'W', 'M']
         self.Interval = self.AllIntervals[Interval_Index]
-        print(self.Interval)
         self.StartSlice = StartSlice
         self.EndSlice = EndSlice
         self.AllSlices = AllSlices
@@ -84,7 +82,6 @@ class Stock:
                         'Close'  :   self.Close,
                         'Volume' :   self.Volume
                         }
-        print('Self.Times:',self.Times)
 
     # data : a 2D array where each entry is an array, which follows the following format
     # [Times,Open,High,Low,Close,Volume]
@@ -102,7 +99,6 @@ class Stock:
         for xi in Points:
             top += (xi - Mu)**2
         sigma = math.sqrt( top / N )
-        print('SD:',sigma)
         return sigma
         
     def run(self):
