@@ -34,7 +34,6 @@ class Gui:
     def getDates(self):
         months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         days = []
-        toReturn = []
         today_date = date.today()
         latestMonth = today_date.strftime('%B')
         latestMonth_Index = months.index(latestMonth)+1

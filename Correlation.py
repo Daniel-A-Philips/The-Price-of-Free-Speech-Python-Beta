@@ -120,7 +120,7 @@ class Correlation:
 
     #https://stackoverflow.com/questions/41925157/logisticregression-unknown-label-type-continuous-using-sklearn-in-python
     def models_evaluation(self):
-        classifiers = [
+        classifiers = [ #Allows for easy selection for SMVI testing
             svm.SVR(),
             linear_model.SGDRegressor(),
             linear_model.BayesianRidge(),
@@ -129,29 +129,38 @@ class Correlation:
             linear_model.PassiveAggressiveRegressor(),
             linear_model.TheilSenRegressor(),
             linear_model.LinearRegression()]
-        prediction_length = 10000
-        print([ [i,i,i] for i in self.joint_data_frame['# of Tweets'].tolist()])
-        trainingData = np.array([ [i,i,i] for i in self.joint_data_frame['# of Tweets'].tolist()]) # Number of Tweets per interval
-        trainingScores = np.array([ i for i in self.joint_data_frame['Stock Volume'].tolist()]) # Volume Traded of Stock in interval
-        predictionData = np.array([[i,i,i] for i in range(0,prediction_length)])# Array from 0,1000000 of number of stocks
 
-        predicted = classifiers[2].fit(trainingData,trainingScores).predict(predictionData)
-        self.SMVI = (sum(predicted) / prediction_length) / len(trainingData)
+        prediction_length = 10000
+
+        trainingData_stock,trainingScores_stock,predictionData_stock = self.get_model_data(prediction_length,self.joint_data_frame['# of Tweets'].tolist(),self.joint_data_frame['Stock Volume'].tolist())
+        trainingData_base,trainingScores_base,predictionData_base = self.get_model_data(prediction_length,self.joint_data_frame['# of Tweets'].tolist(),self.joint_data_frame['Base Volume'].tolist())
+
+        predicted_stock = classifiers[2].fit(trainingData_stock,trainingScores_stock).predict(predictionData_stock)
+        predicted_base = classifiers[2].fit(trainingData_base,trainingScores_base).predict(predictionData_base)
+
+        Stock_SVMI = (sum(predicted_stock) / prediction_length) / len(trainingData_stock)
+        Base_SMVI = (sum(predicted_base) / prediction_length) / len(trainingData_base)
+
+        print('Stock_SMVI: ', Stock_SVMI)
+        print('Base_SMVI: ', Base_SMVI)
+        self.SMVI = abs(Stock_SVMI - Base_SMVI) # Using the difference between the SMVI for the stock and the base allows us to remove the possibility of a market crash
         print(self.SMVI)
 
+    def get_model_data(self,prediction_length,num_tweets,num_stock):
+        trainingData = np.array([ [i,i,i] for i in num_tweets]) # Number of Tweets per interval
+        trainingScores = np.array([ i for i in num_stock]) # Volume Traded of Stock in interval
+        predictionData = np.array([[i,i,i] for i in range(0,prediction_length)])# Array from 0,1000000 of number of stocks
+        return trainingData,trainingScores,predictionData
+
     def add_twitter_data(self):
-        print('self.num_tweets_time_linked_dict: ',self.num_tweets_time_linked_dict)
         headers = self.joint_data_frame.columns.values.tolist()
         headers.insert(0,'# of Tweets')
         headers.insert(0,'Time')
         #self.joint_data_frame
         self.data_frame_as_list = [headers]
         times = self.joint_data_frame.index.values.tolist()
-        print('Header: ',headers)
         for i in range(0,len(times)):
-            print(i)
             line = [self.joint_data_frame.index.values.tolist()[i]] + [self.num_tweets_time_linked_dict[times[i]]] + self.joint_data_frame.values.tolist()[i]
-            print('line: ',line)
             self.data_frame_as_list.append(line)
 
 

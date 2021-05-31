@@ -1,5 +1,3 @@
-import time
-
 from Gui import Gui
 from Stock import Stock
 import PySimpleGUI as sg
@@ -49,7 +47,10 @@ class GuiRunner:
                     continue
                 stock = Stock(toEnter[0],toEnter[1],toEnter[2],toEnter[3],self.gui.Months,False)
                 if stock.hasErrors:
-                    self.gui.update('Terminal','An error occured')
+                    error_message = 'An error occured'
+                    self.gui.update('Terminal',error_message)
+                    self.gui.update('SD', error_message)
+                    self.gui.update('SMVI', error_message)
                     continue
                 else:
                     SDToDisplay = str(stock.SDToDisplay)[0:8]
