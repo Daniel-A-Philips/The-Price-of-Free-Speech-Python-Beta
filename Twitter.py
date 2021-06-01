@@ -58,10 +58,10 @@ class TweepyModule:
     def get_tweets(self, handle):
         time.sleep(random.randrange(0,10)/2)
         start_day = self.to_datetime(self.start)
-        total_tweets, times_slept, tweet_count = 0
+        total_tweets, times_slept, tweet_count = 0,0,0
         user_tweets = []
         user_id = self.user_id[handle]
-        prev_tweet_time, earliest_tweet_id = None
+        prev_tweet_time, earliest_tweet_id = None,None
         while True:
             try:
                 if earliest_tweet_id == None: # Runs on first go
