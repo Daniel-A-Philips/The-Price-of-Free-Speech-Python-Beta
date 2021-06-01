@@ -9,16 +9,13 @@ class tweetCounter:
     # export 'BEARER_TOKEN'='<your_bearer_token>'
     
     def auth(self):
-        bearer_token = "AAAAAAAAAAAAAAAAAAAAAP5KNAEAAAAAycIuL%2BYXlU9sdi7Z267bDQp%2FfE0%3DAkIyNchX9UmeGO10oUkryZa75J7FP4o5jEyM3m4uMbvwe69sXw"
-        return bearer_token
+        return "AAAAAAAAAAAAAAAAAAAAAP5KNAEAAAAAycIuL%2BYXlU9sdi7Z267bDQp%2FfE0%3DAkIyNchX9UmeGO10oUkryZa75J7FP4o5jEyM3m4uMbvwe69sXw"
     
     
     def createDate(self):
         global Dates
-        asString = ""
-        file = open("Data//Time.txt","r")
-        asString = file.read()
-        file.close()
+        with open("Data//Time.txt","r") as file:
+            asString = file.read()
         months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
         yearInt = int(asString[asString.index(" ")+1:len(asString)])
         monthString = months.index(asString[0:asString.index(" ")])+1
@@ -47,8 +44,7 @@ class tweetCounter:
     
     
     def create_headers(self,bearer_token):
-        headers = {"Authorization": "Bearer {}".format(bearer_token)}
-        return headers
+        return {"Authorization": "Bearer {}".format(bearer_token)}
     
     
     def connect_to_endpoint(self,url, headers, params):
@@ -92,12 +88,10 @@ class tweetCounter:
                     read_data.append(line)
         write_file = "Data//User_Data//Admin.json"
         write_file = open(write_file,'w')
-        index = 0
-        for line in read_data:
+        for index, line in enumerate(read_data):
             line = line[line.index(":")+2:len(line)]
             totalTweets += int(line)
             write_file.write(ID[index][0]+":"+ line)
-            index += 1  
         print(totalTweets)
     
     

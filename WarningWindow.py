@@ -13,7 +13,7 @@ class WarningWindow:
 		window = sg.Window("The Price of Free Speech Conditions",layout)
 		while True:
 			event,values = window.read()
-			if event == sg.WIN_CLOSED or event == 'quit': exit()
+			if event in [sg.WIN_CLOSED, 'quit']: exit()
 			elif event == 'agree' and values['check'] == True: 
 				window.close()
 				break

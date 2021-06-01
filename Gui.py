@@ -20,10 +20,10 @@ class Gui:
         with open(os.getcwd() + '/Data/tickers.csv') as file:
             reader = csv.reader(file)
             for line in reader:
-                if not line[0] == 'Symbol' or not line[0].split('|')[0] == 'Symbol':
+                if line[0] != 'Symbol' or line[0].split('|')[0] != 'Symbol':
                     if '^' in line[0] or '^' in line[0].split('|')[0]:
                         continue
-                    if not '|' in line[0]:
+                    if '|' not in line[0]:
                         self.allTickers.append(line[0])
                     else:
                         self.allTickers.append(line[0].split('|')[0])
@@ -40,18 +40,17 @@ class Gui:
         tempMonthIndex = latestMonth_Index
         year = today_date.year
         lastYear = []
-        for i in range(0,12):
+        for i in range(12):
             if tempMonthIndex+i == 13: break
             lastYear.append(date(year-1,tempMonthIndex+i,1))
             days.append(monthrange(year-1, tempMonthIndex+i)[1])
         tempMonthIndex = latestMonth_Index-1
         thisYear = []
-        for f in range(0,latestMonth_Index):
+        for f in range(latestMonth_Index):
             thisYear.append(date(year,tempMonthIndex-f+1,1))
             days.append(monthrange(year, tempMonthIndex-f+1)[1])
         thisYear.reverse()
-        toReturn = lastYear + thisYear
-        return toReturn
+        return lastYear + thisYear
 
     def update(self,key,text):
         self.window[key].update(text)

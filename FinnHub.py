@@ -42,12 +42,11 @@ class FinnHub:
         return monthrange(year,month)[1]
 
     def getDates(self):
-        dateHolder = []
         months = []
         years = []
         if self.start == self.end: #Runs if one month is selected
             year = self.start[len(self.start)-4:]
-            dateHolder.append(year)
+            dateHolder = [year]
         else:
             for startend in self.start_end:
                 years.append(startend[len(startend)-4:])

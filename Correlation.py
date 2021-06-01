@@ -16,9 +16,10 @@ class Correlation:
         Tweep = TweepyModule(self.handles,self.start,self.end)
         self.tweet_times = {} # {handle: [tweets in list]}
         for handle in self.handles:
-            handle_tweet_times = []
-            for tweet in Tweep.all_tweets[handle]:
-                handle_tweet_times.append((tweet.created_at - datetime.datetime(1970, 1, 1)).total_seconds())
+            handle_tweet_times = [
+                (tweet.created_at - datetime.datetime(1970, 1, 1)).total_seconds()
+                for tweet in Tweep.all_tweets[handle]
+            ]
             self.tweet_times[handle] = handle_tweet_times
         self.join_tweet_times = [] # [all tweets in list]
         for handle in self.handles:
@@ -57,7 +58,7 @@ class Correlation:
         temp_list = []
         for i in range(len(list_in)):
             temp_list.append(list_in[i])
-            if len(temp_list) % n == 0 and not len(temp_list) == 1:
+            if len(temp_list) % n == 0 and len(temp_list) != 1:
                 new_list.append(temp_list)
                 temp_list = []
         return new_list
@@ -80,10 +81,8 @@ class Correlation:
         base_data = self.remove_values_from_list(base_data,[])
         del stock_data[0]
         del base_data[0]
-        stock_cols = []
-        base_cols = []
-        for line in stock_data: stock_cols.append(line[0])
-        for line in base_data: base_cols.append(line[0])
+        stock_cols = [line[0] for line in stock_data]
+        base_cols = [line[0] for line in base_data]
         self.start = stock_cols[0]
         self.end = stock_cols[-1]
         self.stock_data_frame = pd.DataFrame(data=stock_data,columns=headers,index=stock_cols)
@@ -152,7 +151,7 @@ class Correlation:
         headers.insert(0,'Time')
         self.data_frame_as_list = [headers]
         times = self.joint_data_frame.index.values.tolist()
-        for i in range(0,len(times)):
+        for i in range(len(times)):
             line = [self.joint_data_frame.index.values.tolist()[i]] + [self.num_tweets_time_linked_dict[times[i]]] + self.joint_data_frame.values.tolist()[i]
             self.data_frame_as_list.append(line)
 

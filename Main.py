@@ -29,12 +29,12 @@ class GuiRunner:
         while True:
             event,values = self.gui.data()
             self.getMonths(values)
-            if not values['Ticker'] == prevTicker:
+            if values['Ticker'] != prevTicker:
                 self.gui.updateTickers()
                 prevTicker = values['Ticker']
-            elif values['Ticker'] == 'Ticker' or values['Ticker'] == '':
+            elif values['Ticker'] in ['Ticker', '']:
                 self.gui.window.FindElement('Ticker').Update(values=self.gui.allTickers,value=values['Ticker'],size=(10,10))
-            if event == sg.WIN_CLOSED or event == 'Exit': exit()
+            if event in [sg.WIN_CLOSED,'Exit']: exit()
             elif event == 'Run':
                 toEnter = [ values['Ticker'],
                             self.Intervals.index(values['Interval']),
@@ -44,7 +44,7 @@ class GuiRunner:
                 self.gui.update('SD',"Calculating...")
                 self.gui.update('SMVI',"Calculating...")
                 self.gui.update('Terminal','Calculating...')
-                if values['Handle'] == '' or values['Handle'] == 'Handle':
+                if values['Handle'] in ['','Handle']:
                     sg.popup('Error, please enter a valid Twitter handle')
                     continue
                 stock = Stock(toEnter[0],toEnter[1],toEnter[2],toEnter[3],self.gui.Months,False)

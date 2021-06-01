@@ -23,7 +23,7 @@ class Stock:
         with open(os.getcwd() + '/Data/tickers.csv') as file:
             reader = csv.reader(file)
             for line in reader:
-                if not line[0] == 'Symbol': self.allTickers.append(line[0])
+                if line[0] != 'Symbol': self.allTickers.append(line[0])
 
     def popup(self,text):
         sg.Popup(text)
@@ -33,17 +33,17 @@ class Stock:
         self.hasErrors = False
         if self.Ticker == 'Ticker':
             self.popup('Error, the asset ticker that has been given has an error')
-        elif not self.Interval in self.AllIntervals:
+        elif self.Interval not in self.AllIntervals:
             self.popup('Error, the interval that has been given is incorrect')
-        elif not self.StartSlice in self.AllSlices:
+        elif self.StartSlice not in self.AllSlices:
             self.popup('Error, the starting time that has been given is incorrect')
-        elif not self.EndSlice in self.AllSlices:
+        elif self.EndSlice not in self.AllSlices:
             self.popup('Error, the ending time that has been given is incorrect')
         elif self.AllSlices.index(self.EndSlice) < self.AllSlices.index(self.StartSlice):
             self.popup('Error, the ending time is before the starting time')
-        elif not self.forSMVI and not self.Ticker in self.allTickers:
+        elif not self.forSMVI and self.Ticker not in self.allTickers:
             self.getTickers()
-            if not self.Ticker in self.allTickers:
+            if self.Ticker not in self.allTickers:
                 self.popup('Error, the given ticker is invalid')
 
     def toDate(self,foo,noTime):
@@ -52,10 +52,7 @@ class Stock:
 
     #Fee fi fo fum, parseToArray to get things done
     def parseToArray(self,fee):
-    	fi = []
-    	for fo in fee:
-    		fi.append(fo.split(','))
-    	return fi
+        return [fo.split(',') for fo in fee]
 
     def getAverage(self,foo):
         Open = float(foo[1])
@@ -68,12 +65,7 @@ class Stock:
         self.headers = self.finnHub.headers
         self.Times = self.Open = self.High = self.Low = self.Close = self.Volume = []
         for line in self.parseToArray(self.finnHub.allData):
-            self.Times.append(float(line[0]))
-            self.Open.append(float(line[1]))
-            self.High.append(float(line[2]))
-            self.Low.append(float(line[3]))
-            self.Close.append(float(line[4]))
-            self.Volume.append(float(line[4]))
+            self._extracted_from_addArrays_5(line)
         self.allData = {
                         'Times'  :   self.Times,
                         'Open'   :   self.Open,
@@ -82,6 +74,14 @@ class Stock:
                         'Close'  :   self.Close,
                         'Volume' :   self.Volume
                         }
+
+    def _extracted_from_addArrays_5(self, line):
+        self.Times.append(float(line[0]))
+        self.Open.append(float(line[1]))
+        self.High.append(float(line[2]))
+        self.Low.append(float(line[3]))
+        self.Close.append(float(line[4]))
+        self.Volume.append(float(line[4]))
 
     # data : a 2D array where each entry is an array, which follows the following format
     # [Times,Open,High,Low,Close,Volume]
@@ -95,11 +95,8 @@ class Stock:
             tempMu += self.getAverage(time)
             Points.append(self.getAverage(time))
         Mu = tempMu/N
-        top = 0
-        for xi in Points:
-            top += (xi - Mu)**2
-        sigma = math.sqrt( top / N )
-        return sigma
+        top = sum((xi - Mu)**2 for xi in Points)
+        return math.sqrt( top / N )
         
     def run(self):
         self.finnHub = FinnHub(self.StartSlice,self.EndSlice,self.Ticker,self.Interval,self.forSMVI)

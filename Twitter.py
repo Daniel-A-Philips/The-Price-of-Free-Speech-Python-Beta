@@ -32,10 +32,12 @@ class TweepyModule:
         print('Tweets have be downloaded')
 
     def run_tweet_getter(self):
-        future = {}
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            for user in self.users:
-                future[user] = executor.submit(self.get_tweets,handle=user)
+            future = {
+                user: executor.submit(self.get_tweets, handle=user)
+                for user in self.users
+            }
+
             for user in self.users:
                 self.all_tweets[user] = future[user].result()
 
@@ -46,7 +48,7 @@ class TweepyModule:
             tweets = self.api.user_timeline(screen_name = user,count=200)
             tweet0 = None
             for tweet in tweets:
-                if tweet0 == None:
+                if tweet0 is None:
                     tweet0 = tweet
                 index += 1
 
@@ -90,7 +92,7 @@ class TweepyModule:
                     prev_tweet_time = tweet.created_at
                 else:
                     found_early_tweets = True
-                if earliest_tweet_id == None or tweet.id < earliest_tweet_id:
+                if earliest_tweet_id is None or tweet.id < earliest_tweet_id:
                     earliest_tweet_id = tweet.id
             if found_early_tweets:
                 return user_tweets
