@@ -1,26 +1,28 @@
+from datetime import datetime
 import concurrent.futures
+import twitter
+import tweepy
 import random
 import time
-import tweepy
-import twitter
-from datetime import datetime
+
 
 class TweepyModule:
 
     def set_api(self):
-        self.auth = tweepy.AppAuthHandler("ej9xM4fp6CXo9jxbn8HSfuaMX", "p1zqluAO67dSrpDHDDFAw6mZTxWTQy6acyWAShulaA07etIN3H")
+        self.auth = tweepy.AppAuthHandler("ej9xM4fp6CXo9jxbn8HSfuaMX",
+                                          "p1zqluAO67dSrpDHDDFAw6mZTxWTQy6acyWAShulaA07etIN3H")
         self.api = tweepy.API(self.auth)
         self.api_twitter_official = twitter.Api(consumer_key='ej9xM4fp6CXo9jxbn8HSfuaMX',
-                               consumer_secret='p1zqluAO67dSrpDHDDFAw6mZTxWTQy6acyWAShulaA07etIN3H',
-                               access_token_key='4165914892-Stzhsbf10jyoZBsylN7PurQTNGYh2K9WsdFRgOI',
-                               access_token_secret='SuBmCVz3csEqNp9fanOhi3mopfC2gBycghNr1yxwaGI7R')
+                                                consumer_secret='p1zqluAO67dSrpDHDDFAw6mZTxWTQy6acyWAShulaA07etIN3H',
+                                                access_token_key='4165914892-Stzhsbf10jyoZBsylN7PurQTNGYh2K9WsdFRgOI',
+                                                access_token_secret='SuBmCVz3csEqNp9fanOhi3mopfC2gBycghNr1yxwaGI7R')
 
     def get_ID(self):
         self.user_id = {}
         for user in self.users:
             self.user_id[user] = self.api_twitter_official.UsersLookup(screen_name=user)[0].AsDict()['id']
 
-    def __init__(self,users,start,end):
+    def __init__(self, users, start, end):
         self.users = users
         self.start = start
         self.end = end
@@ -45,31 +47,31 @@ class TweepyModule:
         self.retrieved_tweets = []
         index = 0
         for user in self.users:
-            tweets = self.api.user_timeline(screen_name = user,count=200)
+            tweets = self.api.user_timeline(screen_name=user, count=200)
             tweet0 = None
             for tweet in tweets:
                 if tweet0 is None:
                     tweet0 = tweet
                 index += 1
 
-    def to_datetime(self,a):
+    def to_datetime(self, a):
         return datetime.fromtimestamp(a)
 
     def get_tweets(self, handle):
-        time.sleep(random.randrange(0,10)/2)
+        time.sleep(random.randrange(0, 10) / 2)
         start_day = self.to_datetime(self.start)
-        total_tweets, times_slept, tweet_count = 0,0,0
+        total_tweets, times_slept, tweet_count = 0, 0, 0
         user_tweets = []
         user_id = self.user_id[handle]
-        prev_tweet_time, earliest_tweet_id = None,None
+        prev_tweet_time, earliest_tweet_id = None, None
         while True:
             try:
-                if earliest_tweet_id == None: # Runs on first go
+                if earliest_tweet_id == None:  # Runs on first go
                     timeline = self.api.user_timeline(id=user_id, count=200)
                 else:
-                    timeline = self.api.user_timeline(id=user_id,max_id=earliest_tweet_id)
+                    timeline = self.api.user_timeline(id=user_id, max_id=earliest_tweet_id)
             except Exception as e:
-                timeline = [] # Handle errors from timeline not being created if an error is encountered in the previous try statement
+                timeline = []  # Handle errors from timeline not being created if an error is encountered in the previous try statement
                 if e.response.status == 429:
                     times_slept += 1
                     if times_slept == 2:
@@ -97,10 +99,3 @@ class TweepyModule:
             if found_early_tweets:
                 return user_tweets
         return user_tweets
-
-
-
-
-
-
-

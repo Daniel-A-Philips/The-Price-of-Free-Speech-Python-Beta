@@ -1,4 +1,3 @@
-from io import DEFAULT_BUFFER_SIZE
 import requests
 import csv
 import json

@@ -1,5 +1,5 @@
 from FinnHub import FinnHub
-import PySimpleGUI as sg
+import PySimpleGUI
 import datetime
 import math
 import csv
@@ -26,7 +26,7 @@ class Stock:
                 if line[0] != 'Symbol': self.allTickers.append(line[0])
 
     def popup(self,text):
-        sg.Popup(text)
+        PySimpleGUI.Popup(text)
         self.hasErrors = True
 
     def errorHandling(self):

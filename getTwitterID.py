@@ -1,13 +1,11 @@
 import requests
 import csv
 
-# To set your enviornment variables in your terminal run the following line:
-# export 'BEARER_TOKEN'='<your_bearer_token>'
+
 class getTwitterID:
     def auth(self):
         self.bearer_token = "AAAAAAAAAAAAAAAAAAAAAP5KNAEAAAAAycIuL%2BYXlU9sdi7Z267bDQp%2FfE0%3DAkIyNchX9UmeGO10oUkryZa75J7FP4o5jEyM3m4uMbvwe69sXw"
         return self.bearer_token
-
 
     def create_url(self):
         # Specify the usernames that you want to lookup below
@@ -19,12 +17,10 @@ class getTwitterID:
         # public_metrics, url, username, verified, and withheld
         self.url = "https://api.twitter.com/2/users/by?{}&{}".format(self.usernames, user_fields)
 
-
-    def create_headers(self,bearer_token):
+    def create_headers(self, bearer_token):
         self.headers = {"Authorization": "Bearer {}".format(bearer_token)}
 
-
-    def connect_to_endpoint(self,url, headers):
+    def connect_to_endpoint(self, url, headers):
         response = requests.request("GET", url, headers=headers)
         if response.status_code != 200:
             raise Exception(
@@ -38,10 +34,10 @@ class getTwitterID:
         self.usernames = "usernames="
         for handle in self.handles:
             self.usernames = self.usernames + handle + ","
-        self.usernames= self.usernames[:-1]
+        self.usernames = self.usernames[:-1]
 
     def writeData(self):
-        csvfile = open(self.writeFile,'w',newline='')
+        csvfile = open(self.writeFile, 'w', newline='')
         writer = csv.writer(csvfile)
         index = 0
         writable = ""
@@ -63,12 +59,12 @@ class getTwitterID:
         # Checks if there are any invalid handles
         try:
             temp = self.output['errors']
-        except: # Runs if there are no errors
+        except:  # Runs if there are no errors
             print("All twitter handles are valid")
         else:
             errors = len(self.output['errors'])
             temp = self.output['errors']
-            print("Warning, "+str(errors)+" of the twitter handles is invalid!")
+            print("Warning, " + str(errors) + " of the twitter handles is invalid!")
             for i in temp:
                 self.invalid.append(i['value'])
         try:
@@ -82,7 +78,7 @@ class getTwitterID:
     def getOutput(self):
         return self.ID
 
-    def __init__(self,handle):
+    def __init__(self, handle):
         self.handles = [handle]
         self.allData = []
         self.writeFile = 'Data/Handles_ID.csv'

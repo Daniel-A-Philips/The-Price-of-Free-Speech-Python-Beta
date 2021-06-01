@@ -1,11 +1,10 @@
-import os
-import csv
 import difflib
+import csv
+import os
 
 class predictor:
 
 	def getTickers(self):
-		self.allTickers = []
 		with open(os.getcwd() + '/Data/tickers.csv') as file:
 			reader = csv.reader(file)
 			for line in reader:
@@ -18,5 +17,5 @@ class predictor:
 		return difflib.get_close_matches(current.upper(),self.allTickers,n=number_to_show)
 
 	def __init__(self):
+		self.allTickers = []
 		self.getTickers()
-	
