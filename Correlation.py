@@ -174,10 +174,8 @@ class Correlation:
             self.data_frame_as_list.append(line)
 
     def create_comparison(self):
-        sd_of_stock = self.stock.SDToDisplay
-        sd_of_base = self.base.SDToDisplay
-        all_stock_data = self.chunks(self.stock.allData['Times'], 6)
-        all_base_data = self.chunks(self.base.allData['Times'], 6)
+        sd_of_stock, sd_of_base = self.stock.SDToDisplay, self.base.SDToDisplay
+        all_stock_data, all_base_data = self.chunks(self.stock.allData['Times'], 6), self.chunks(self.base.allData['Times'], 6)
         self.shared_data = self.get_shared_timings(all_stock_data, all_base_data)
         self.create_joint_data_frame(self.shared_data)
         self.create_individual_data_frame(all_stock_data, all_stock_data)
