@@ -5,6 +5,7 @@ import twitter
 import tweepy
 import random
 import time
+import os
 
 
 class TweepyModule:
@@ -40,14 +41,13 @@ class TweepyModule:
                 continue
 
     def __init__(self, users, start, end):
-        self.users = users
-        self.start = start
-        self.end = end
+        self.users, self.start, self.end = users, start, end
         self.set_api()
         self.get_ID()
         self.current_handle_index = 0
         self.all_tweets = {}
         self.run_tweet_getter()
+        os.system('clear')
         print('Tweets have be downloaded')
 
     def run_tweet_getter(self):
@@ -82,6 +82,7 @@ class TweepyModule:
         prev_tweet_time, earliest_tweet_id = None, None
         batch_num = 1
         while True:
+            os.system('clear')
             print('Downloading batch %d of tweets for %s' % (batch_num,handle))
             batch_num = batch_num + 1
             try:

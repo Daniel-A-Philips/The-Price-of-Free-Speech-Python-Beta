@@ -3,6 +3,7 @@ from Twitter import TweepyModule
 import pandas as pd
 import numpy as np
 import datetime
+import os
 
 
 class Correlation:
@@ -147,11 +148,12 @@ class Correlation:
         Stock_SVMI = (sum(predicted_stock) / prediction_length) / len(trainingData_stock)
         Base_SMVI = (sum(predicted_base) / prediction_length) / len(trainingData_base)
 
-        print('Stock_SMVI: ', Stock_SVMI)
-        print('Base_SMVI: ', Base_SMVI)
+        os.system('clear')
+        print('Stock SMVI: ', Stock_SVMI)
+        print('Base SMVI: ', Base_SMVI)
         self.SMVI = abs(
-            Stock_SVMI - Base_SMVI)  # Using the difference between the SMVI for the stock and the base allows us to remove the possibility of a market crash
-        print(self.SMVI)
+            abs(Stock_SVMI) - abs(Base_SMVI))  # Using the difference between the SMVI for the stock and the base allows us to remove the possibility of a market crash
+        print('Real SMVI (Unscaled): ',self.SMVI)
 
     def get_model_data(self, prediction_length, num_tweets, num_stock):
         trainingData = np.array([[i, i, i] for i in num_tweets])  # Number of Tweets per interval

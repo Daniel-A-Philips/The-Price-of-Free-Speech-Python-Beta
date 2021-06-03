@@ -7,8 +7,6 @@ import os
 class FinnHub:
 
     def run(self):
-        self.Dates = self.getDates()
-        self.absPath = os.getcwd()
         self.URLConnect()
         self.writeData()
 
@@ -17,7 +15,7 @@ class FinnHub:
         self.key, self.headers = 'c1vv82l37jkoemkedus0', ['time', 'open', 'high', 'low', 'close', 'volume']
         self.start, self.end, self.start_end = start, end, [start, end]
         self.Ticker, self.Interval, self.forSMVI, self.Format = Ticker.upper(), Interval, forSMVI, 'csv'
-        self.Dates, self.rawData, self.allData = [],[],[]
+        self.Dates, self.rawData, self.allData, self.absPath = self.getDates(),[],[],os.getcwd()
         self.run()
 
     def toUnix(self, months, years):
@@ -47,20 +45,38 @@ class FinnHub:
         index = 0
         ticker_to_print = self.Ticker
         if self.forSMVI: ticker_to_print = 'Baseline'
+        os.system('clear')
         while end < final:
             prevStart = prevStart + monthInSeconds
             end = end + monthInSeconds
             startime = str(prevStart)
             endtime = str(end)
-            self.Interval = str(self.Interval)
-            url = ('https://finnhub.io/api/v1/stock/candle?symbol=%s&resolution=%s&from=%s&to=%s&format=%s&token=%s' % (self.Ticker,self.Interval,str(startime),str(endtime),self.Format,self.key))
-            r = requests.get(url)
-            print('Connected to URL for',ticker_to_print)
+            try:
+                url = self.create_url(self.Ticker,self.Interval,startime,endtime,self.Format,self.key)
+                r = requests.get(url)
+            except:
+                print('Unable to connect to URL for',ticker_to_print)
+                for i in range(3):
+                    try:
+                        print('Try',i)
+                        url = self.create_url(self.Ticker,self.Interval,startime,endtime,self.Format,self.key)
+                        r = requests.get(url)
+                        break
+                    except:
+                        foo = None
+                continue
+
+            if index == 0: print('Connected to URL for',ticker_to_print)
+            index = index + 1
             data = str(r.content).split("\\n")
             data.pop(0)
             data.remove("'")
             self.rawData.append(data)
         print('Recieved all stock related information for',ticker_to_print)
+
+    def create_url(self,ticker,interval,startime,endtime,format,key):
+        return ('https://finnhub.io/api/v1/stock/candle?symbol=%s&resolution=%s&from=%s&to=%s&format=%s&token=%s' % (ticker,interval,startime,endtime,format,key))
+
 
     def writeData(self):
         if self.forSMVI:
