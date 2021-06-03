@@ -2,19 +2,15 @@ import requests
 import csv
 
 
+
 class getTwitterID:
+
     def auth(self):
         self.bearer_token = "AAAAAAAAAAAAAAAAAAAAAP5KNAEAAAAAycIuL%2BYXlU9sdi7Z267bDQp%2FfE0%3DAkIyNchX9UmeGO10oUkryZa75J7FP4o5jEyM3m4uMbvwe69sXw"
         return self.bearer_token
 
     def create_url(self):
-        # Specify the usernames that you want to lookup below
-        # You can enter up to 100 comma-separated values.
         user_fields = "user.fields=description,created_at"
-        # User fields are adjustable, options include:
-        # created_at, description, entities, id, location, name,
-        # pinned_tweet_id, profile_image_url, protected,
-        # public_metrics, url, username, verified, and withheld
         self.url = "https://api.twitter.com/2/users/by?{}&{}".format(self.usernames, user_fields)
 
     def create_headers(self, bearer_token):
@@ -55,7 +51,6 @@ class getTwitterID:
             index += 1
 
     def parseData(self):
-        self.ID = []
         # Checks if there are any invalid handles
         try:
             temp = self.output['errors']
@@ -80,9 +75,8 @@ class getTwitterID:
 
     def __init__(self, handle):
         self.handles = [handle]
-        self.allData = []
+        self.allData, self.invalid, self.ID = ([] for i in range(3))
         self.writeFile = 'Data/Handles_ID.csv'
-        self.invalid = []
         self.getData()
         self.auth()
         self.create_url()

@@ -1,15 +1,16 @@
-import os
-import csv
-import PySimpleGUI
-from datetime import date
-from calendar import monthrange
 from AutoComplete import predictor
+from calendar import monthrange
+from datetime import date
+import PySimpleGUI
+import csv
+import os
+
 
 
 class Gui:
 
     def __init__(self):
-        self.Intervals = self.Months = self.window = self.complete = self.allTickers = self.non_parsed_tickers = []
+        self.Intervals, self.Months, self.window, self.complete, self.allTickers, self.non_parsed_tickers = ([] for i in range(6))
         self.run()
 
     def format(self, foo):
@@ -72,20 +73,14 @@ class Gui:
         for month in self.getDates():
             self.Months.append(self.format(month))
         self.layout = [
-            [PySimpleGUI.Text('Stock Ticker', size=(15, 1)),
-             PySimpleGUI.InputCombo(values=self.allTickers, key='Ticker', default_value='Ticker', size=(10, 1))],
-            [PySimpleGUI.Text('Twitter Handles (Separated by a comma)', size=(15, 3)),
-             PySimpleGUI.Input("Handle", key='Handle', size=(10, 1))],
-            [PySimpleGUI.Text('Data Interval', size=(15, 1)),
-             PySimpleGUI.Combo(self.Intervals, default_value=self.Intervals[3], key='Interval')],
-            [PySimpleGUI.Text('Start Month', size=(15, 1)),
-             PySimpleGUI.Combo(self.Months, default_value=self.Months[0], key='StartMonth')],
-            [PySimpleGUI.Text('End Month', size=(15, 1)),
-             PySimpleGUI.Combo(self.Months, default_value=self.Months[len(self.Months) - 1], key='EndMonth')],
+            [PySimpleGUI.Text('Stock Ticker', size=(15, 1)),    PySimpleGUI.InputCombo(values=self.allTickers, key='Ticker', default_value='Ticker', size=(10, 1))],
+            [PySimpleGUI.Text('Twitter Handles (Separated by a comma)', size=(15, 3)),  PySimpleGUI.Input("Handle", key='Handle', size=(10, 1))],
+            [PySimpleGUI.Text('Data Interval', size=(15, 1)),   PySimpleGUI.Combo(self.Intervals, default_value=self.Intervals[3], key='Interval')],
+            [PySimpleGUI.Text('Start Month', size=(15, 1)),   PySimpleGUI.Combo(self.Months, default_value=self.Months[0], key='StartMonth')],
+            [PySimpleGUI.Text('End Month', size=(15, 1)),   PySimpleGUI.Combo(self.Months, default_value=self.Months[len(self.Months) - 1], key='EndMonth')],
             [PySimpleGUI.Text('SD:', size=(5, 1)), PySimpleGUI.Text(size=(10, 1), key='SD')],
             [PySimpleGUI.Text('SMVI:', size=(5, 1)), PySimpleGUI.Text(size=(10, 1), key='SMVI')],
-            [PySimpleGUI.Button('Run'),
-             PySimpleGUI.Text('Please enter in your information', size=(28, 1), key='Terminal')],
+            [PySimpleGUI.Button('Run'),   PySimpleGUI.Text('Please enter in your information', size=(28, 1), key='Terminal')],
             [PySimpleGUI.Button("Exit")]
         ]
         PySimpleGUI.theme('Reddit')
